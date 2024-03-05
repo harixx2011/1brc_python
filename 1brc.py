@@ -3,24 +3,29 @@ import fileinput
 
 FILENAME = "measurements/10mil.txt"
 
+class City():
+     def __init__(self, name, temperature):
+          self.name = name
+          self.min = temperature
+          self.max = temperature
+          self.sum = temperature
+          self.count = 1
 
-def testing():
-     time_start = time.perf_counter()
+     def avg(self):
+          return self.sum / self.count
 
+
+def using_class():
      with fileinput.input(FILENAME, encoding="utf-8") as file:
           for line in file:
-               continue
-
-     time_end = time.perf_counter()
-     print(time_end-time_start)
-
+               pass
 
 # TODO: Use class, object for each dict entry
 def real_thing():
      time_start = time.perf_counter()
      with fileinput.input(FILENAME, encoding="utf-8") as file:
+          city_temp = {}
           for line in file:
-               city_temp = {}
                x = line.strip().split(";")
                city = x[0]
                temperature = round(float(x[1]), 1)
