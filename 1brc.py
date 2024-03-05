@@ -1,5 +1,6 @@
 import time
 import fileinput
+from pprint import pprint
 
 FILENAME = "measurements/10mil.txt"
 
@@ -13,16 +14,34 @@ class City():
 
      def avg(self):
           return self.sum / self.count
+     
+     def __str__(self):
+          return f"City: {self.name}, Min: {self.min}, Max: {self.max}, Avg:{self.avg()} "
 
 
 def using_class():
      with fileinput.input(FILENAME, encoding="utf-8") as file:
+          cities = {} # Contains all cities
           for line in file:
-               pass
+               split_line = line.strip().split(";")
+               city_name = split_line[0]
+               temperature = round(float(split_line[1]), 1)
+               
+               if city_name not in cities:
+                    cities[city_name] = City(city_name, temperature)
+               else:
+                    if temperature < cities[city_name].min:
+                         cities[city_name].min = temperature
+                    elif temperature > cities[city_name].max:
+                         cities[city_name].max = temperature
+                    cities[city_name].count += 1
+                    cities[city_name].sum += temperature
+
+          print(cities["Beijing"])
+                
 
 # TODO: Use class, object for each dict entry
 def real_thing():
-     time_start = time.perf_counter()
      with fileinput.input(FILENAME, encoding="utf-8") as file:
           city_temp = {}
           for line in file:
@@ -55,12 +74,27 @@ def real_thing():
                          
                     city_temp[city] = (min, max, sum, count, avg)
 
-     time_end = time.perf_counter()
-     print(round(time_end-time_start, 2))
+     print(city_temp["Beijing"])
+
+
+def testing():
+
+     with fileinput.input(FILENAME, encoding="utf-8") as file:
+          for line in file:
+               continue
 
 
 def main():
+
      real_thing()
+
+     print("Time starts now:")
+     time_start = time.perf_counter()
+     using_class()
+     
+     # pprint(vars(City.name =="Beijing"))
+     time_end = time.perf_counter()
+     print(round(time_end-time_start, 2))
 
 
 if __name__ == "__main__":
