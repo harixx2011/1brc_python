@@ -1,7 +1,8 @@
 import time
 import fileinput
 
-FILENAME = "hundred_mil.txt"
+FILENAME = "measurements/10mil.txt"
+
 
 def testing():
      time_start = time.perf_counter()
@@ -12,6 +13,7 @@ def testing():
 
      time_end = time.perf_counter()
      print(time_end-time_start)
+
 
 # TODO: Use class, object for each dict entry
 def real_thing():
@@ -49,11 +51,11 @@ def real_thing():
                     city_temp[city] = (min, max, sum, count, avg)
 
      time_end = time.perf_counter()
-     print(time_end-time_start)
+     print(round(time_end-time_start, 2))
 
 
 def main():
-     testing()
+     real_thing()
 
 
 if __name__ == "__main__":

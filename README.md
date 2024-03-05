@@ -8,4 +8,6 @@ Tested on 100mil due to time constraints. Rough overview, not really comparable.
 
 ### Baseline
 
+123.84s (Laptop)
+
 My first idea, no real optimizations. Reading line by line.
