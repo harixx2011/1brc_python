@@ -2,7 +2,7 @@ import time
 import fileinput
 
 FILENAME = "measurements/10mil.txt"
-
+TESTCITY = "Barton"  # "Lapa"
 
 class City:
     def __init__(self, name, temperature):
@@ -13,10 +13,10 @@ class City:
         self.count = 1
 
     def avg(self):
-        return self.sum / self.count
+        return round(self.sum / self.count, 1)
 
     def __str__(self):
-        return f"City: {self.name}, Min: {self.min}, Max: {self.max}, Avg:{self.avg()}"
+        return f"City:{self.name}={self.min}/{self.avg()}/{self.max}"
 
 
 def using_class():
@@ -37,11 +37,11 @@ def using_class():
                 cities[city_name].count += 1
                 cities[city_name].sum += temperature
 
-        print(cities["Beijing"])
+        print(cities[TESTCITY])
 
 
 # TODO: Use class, object for each dict entry
-def real_thing():
+def baseline():
     with fileinput.input(FILENAME, encoding="utf-8") as file:
         city_temp = {}
         for line in file:
@@ -74,7 +74,7 @@ def real_thing():
 
                 city_temp[city] = (min, max, sum, count, avg)
 
-    print(city_temp["Beijing"])
+    print(f"City:{TESTCITY}={city_temp[TESTCITY][0]}/{round(city_temp[TESTCITY][4],1)}/{city_temp[TESTCITY][1]}")
 
 
 def testing():
@@ -84,13 +84,15 @@ def testing():
 
 
 def main():
-    real_thing()
+    print("Time 1 starts now:")
+    time_start = time.perf_counter()
+    baseline()
+    time_end = time.perf_counter()
+    print(f"Duration = {round(time_end - time_start, 2)}")
 
-    print("Time starts now:")
+    print("Time 2 starts now:")
     time_start = time.perf_counter()
     using_class()
-
-    # pprint(vars(City.name =="Beijing"))
     time_end = time.perf_counter()
     print(round(time_end - time_start, 2))
 
