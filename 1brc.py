@@ -4,6 +4,7 @@ import fileinput
 FILENAME = "measurements/10mil.txt"
 TESTCITY = "Barton"  # "Lapa"
 
+
 class City:
     def __init__(self, name, temperature):
         self.name = name
@@ -20,8 +21,13 @@ class City:
 
 
 def using_class():
+    # TODO: Try reading file in chunks
+    # with open(FILENAME, encoding="utf-8") as file:
+    #     while True:
+    #         chunk = file.read(1024)
+
     with fileinput.input(FILENAME, encoding="utf-8") as file:
-        cities = {}  # Contains all cities
+        cities = {}
         for line in file:
             split_line = line.strip().split(";")
             city_name = split_line[0]
@@ -40,7 +46,6 @@ def using_class():
         print(cities[TESTCITY])
 
 
-# TODO: Use class, object for each dict entry
 def baseline():
     with fileinput.input(FILENAME, encoding="utf-8") as file:
         city_temp = {}
@@ -60,7 +65,6 @@ def baseline():
                 max = city_temp[city][1]
                 sum = city_temp[city][2]
                 count = city_temp[city][3]
-                avg = city_temp[city][4]
                 sum += temperature
                 count += 1
                 avg = (sum / count)
@@ -75,12 +79,6 @@ def baseline():
                 city_temp[city] = (min, max, sum, count, avg)
 
     print(f"City:{TESTCITY}={city_temp[TESTCITY][0]}/{round(city_temp[TESTCITY][4],1)}/{city_temp[TESTCITY][1]}")
-
-
-def testing():
-    with fileinput.input(FILENAME, encoding="utf-8") as file:
-        for line in file:
-            continue
 
 
 def main():
