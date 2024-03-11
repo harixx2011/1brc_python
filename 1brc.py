@@ -26,7 +26,7 @@ def using_class():
     #     while True:
     #         chunk = file.read(1024)
 
-    with fileinput.input(FILENAME, encoding="utf-8") as file:
+    with open(FILENAME, "r", encoding="utf-8") as file:
         cities = {}
         for line in file:
             split_line = line.strip().split(";")
